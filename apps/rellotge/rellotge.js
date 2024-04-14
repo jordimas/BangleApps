@@ -129,7 +129,7 @@
     var d = new Date();
     var m = d.getMinutes();
 
-    // drawSting centered
+    // drawString centered
     g.setFontAlign(-1, 0);
 
     // draw time
