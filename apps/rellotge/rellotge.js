@@ -27,6 +27,7 @@
   }
 
   function addLineFeeds(inputString, g, posX) {
+      const margin = 2;
       const words = inputString.split(' ');
       let lines = "";
       let line = "";
@@ -34,7 +35,7 @@
 
       for (const word of words) {
           const nextLine = line + word;
-          const width = posX + g.stringWidth(nextLine);
+          const width = posX + g.stringWidth(nextLine) + margin;
 
           if (width > totalWidth) {
               lines += line.trim() + "\r\n";
