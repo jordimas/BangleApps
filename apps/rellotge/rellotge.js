@@ -208,8 +208,15 @@
       Bangle.removeListener('lcdPower', onLcd);
     }
   }
-  Bangle.on('lcdPower', onLcd);
-  Bangle.setUI("clock");
+ Bangle.on('lcdPower', onLcd);
+ Bangle.setUI({
+         mode: "clockupdown"
+     },
+     btn => {
+         // up & down even which forces panel switch
+         drawSimpleClock();
+     });
+
   Bangle.loadWidgets();
   require("widget_utils").swipeOn();
 
