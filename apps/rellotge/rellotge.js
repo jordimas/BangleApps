@@ -26,18 +26,17 @@
     return leshores2[hour];
   }
 
-  function addLineFeeds(inputString, g, x) {
+  function addLineFeeds(inputString, g, posX) {
       const words = inputString.split(' ');
       let lines = "";
       let line = "";
       const totalWidth = g.getWidth();
 
-      for (let i = 0; i < words.length; i++) {
-          const word = words[i];
+      for (const word of words) {
           const nextLine = line + word;
-          const width = x + g.stringWidth(nextLine);
+          const width = posX + g.stringWidth(nextLine);
 
-          if (width  > totalWidth) {
+          if (width > totalWidth) {
               lines += line.trim() + "\r\n";
               line = "";
           }
