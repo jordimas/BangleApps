@@ -14,7 +14,7 @@
   let panel = Panel.STEPS;
 
   const xyCenter = g.getWidth() /9;
-  const yposTime = 55;
+  const yposTime = 45;
   const yposDate = 130;
   const leshores = ["Les dotze","La una","Les dues","Les tres","Les quatre","Les cinc","Les sis","Les set","Les vuit","Les nou","Les deu","Les onze","Les dotze","La una","Les dues","Les tres","Les quatre","Les cinc","Les sis","Les set","Les vuit","Les nou","Les deu","Les onze","Les dotze"];
   const leshores2 = ["d'una","de dues","de tres","de quatre","de cinc","de sis","de set","de vuit","de nou","de deu","d'onze","de dotze"];
@@ -111,7 +111,6 @@
     g.drawString(mon, g.getWidth() - 70, g.getHeight() - 25, true);
   }
 
-
   function drawSteps() {
   
     g.setFont(font, dateFontSize);
@@ -124,13 +123,10 @@
   }
 
   function drawSimpleClock() {
-    g.clearRect(Bangle.appRect);
+
     // get date
     var d = new Date();
     var m = d.getMinutes();
-
-    // drawString centered
-    g.setFontAlign(-1, 0);
 
     let t;
     if (m >= 0 && m < 2) {
@@ -182,6 +178,10 @@
     } else if (m >= 57) {
       t = "Tres quarts i mig ben tocats " + getHora(d.getHours());
     }
+    g.clearRect(Bangle.appRect);
+    // drawString centered
+    g.setFontAlign(-1, 0);
+
     g.setFont(font, timeFontSize);
     t = addLineFeeds(t, g, xyCenter);
     g.drawString(t, xyCenter, yposTime, true);
