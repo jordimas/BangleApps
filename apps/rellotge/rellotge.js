@@ -18,8 +18,6 @@
   const yposDate = 130;
   const leshores = ["Les dotze","La una","Les dues","Les tres","Les quatre","Les cinc","Les sis","Les set","Les vuit","Les nou","Les deu","Les onze","Les dotze","La una","Les dues","Les tres","Les quatre","Les cinc","Les sis","Les set","Les vuit","Les nou","Les deu","Les onze","Les dotze"];
   const leshores2 = ["d'una","de dues","de tres","de quatre","de cinc","de sis","de set","de vuit","de nou","de deu","d'onze","de dotze"];
-  const fontWeight = 12;
-  const maxChars = Math.floor(Bangle.appRect.w / fontWeight);
 
   function getHora(hour) {
     if (hour >= 12) {
@@ -28,14 +26,18 @@
     return leshores2[hour];
   }
 
-  function addLineFeeds(inputString) {
+  function addLineFeeds(inputString, g, x) {
       const words = inputString.split(' ');
       let lines = "";
       let line = "";
+      const totalWidth = g.getWidth();
 
       for (let i = 0; i < words.length; i++) {
           const word = words[i];
-          if (line.length + word.length > maxChars) {
+          const nextLine = line + word;
+          const width = x + g.stringWidth(nextLine);
+
+          if (width  > totalWidth) {
               lines += line.trim() + "\r\n";
               line = "";
           }
@@ -183,13 +185,12 @@
     } else if (m >= 57) {
       t = "Tres quarts i mig ben tocats " + getHora(d.getHours());
     }
-    t = addLineFeeds(t)
     g.setFont(font, timeFontSize);
+    t = addLineFeeds(t, g, xyCenter);
     g.drawString(t, xyCenter, yposTime, true);
 
     if (panel == Panel.STEPS) {
        drawSteps();
-       //drawDate();
        panel = Panel.DATE;
     } else {
        drawDate();
