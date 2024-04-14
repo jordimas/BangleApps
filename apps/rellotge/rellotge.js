@@ -46,8 +46,6 @@
 
   // Function to draw the watch face
   function drawWatchFace() {
-    // Clear the screen
-    //g.clear();
 
     // Draw the outline of the watch face
     g.setColor(0, 0, 0); // black color
@@ -76,18 +74,47 @@
     g.setColor(0, 0, 0); // black color
 
     // Draw hour hand
-    const hourHandLength = 20;
+    const hourHandLength = 10;
     const hourHandX = centerX + Math.sin(hourAngle) * hourHandLength;
     const hourHandY = centerY - Math.cos(hourAngle) * hourHandLength;
     g.drawLine(centerX, centerY, hourHandX, hourHandY);
 
     // Draw minute hand
-    const minuteHandLength = 25;
+    const minuteHandLength = 15;
     const minuteHandX = centerX + Math.sin(minuteAngle) * minuteHandLength;
     const minuteHandY = centerY - Math.cos(minuteAngle) * minuteHandLength;
     g.drawLine(centerX, centerY, minuteHandX, minuteHandY);
   }
 
+  function drawNumbers() {
+    var radius = 27;
+    var fontSize = 1;
+  
+    g.setFont("6x8", fontSize);
+    for (var i = 0; i < 12; i++) {
+      var angle = Math.PI * (i * 30 - 90) / 180;
+      var x = centerX + Math.cos(angle) * radius;
+      var y = centerY + Math.sin(angle) * radius;
+      g.drawString((i + 1).toString(), x, y);
+    }
+  }
+
+  function getSteps() {
+    var steps = Bangle.getHealthStatus("day").steps;
+    steps = Math.round(steps/1000);
+    return steps + "k";
+  }
+
+  function drawSteps() {
+  
+    g.setFont(font, dateFontSize);
+    const steps = getSteps()
+    g.drawString(steps, g.getWidth() - 60, g.getHeight() - 60, true);
+
+    g.setFont(font, "4x6");
+    const text = "Passos"
+    g.drawString(text, g.getWidth() - 70, g.getHeight() - 25, true);
+  }
 
   function drawSimpleClock() {
     g.clearRect(Bangle.appRect);
@@ -153,15 +180,10 @@
     g.setFont(font, timeFontSize);
     g.drawString(t, xyCenter, yposTime, true);
 
-    // draw Hours
-    g.setFont(font, dateFontSize);    
-    var mu = "";
-    if (m < 10) {mu = "0"+m;} else {mu = m;}
-
-    //g.drawString(d.getHours()+":"+mu, xyCenter, yposDate, true);
-
+    drawSteps();
     drawWatchFace();
     updateWatch();
+    //drawNumbers();
   }
 
   // handle switch display on by pressing BTN1
