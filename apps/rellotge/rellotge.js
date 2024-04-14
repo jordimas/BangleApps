@@ -133,7 +133,6 @@
     // drawString centered
     g.setFontAlign(-1, 0);
 
-    // draw time
     let t;
     if (m >= 0 && m < 2) {
       t = leshores[d.getHours()] + " en punt";
