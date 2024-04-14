@@ -6,6 +6,13 @@
   const dateFontSize = 2;
   const font = "12x20";
 
+  const Panel = {
+    STEPS: 0,
+    DATE: 1
+  };
+
+  let panel = Panel.STEPS;
+
   const xyCenter = g.getWidth() /9;
   const yposTime = 55;
   const yposDate = 130;
@@ -86,24 +93,24 @@
     g.drawLine(centerX, centerY, minuteHandX, minuteHandY);
   }
 
-  function drawNumbers() {
-    var radius = 27;
-    var fontSize = 1;
-  
-    g.setFont("6x8", fontSize);
-    for (var i = 0; i < 12; i++) {
-      var angle = Math.PI * (i * 30 - 90) / 180;
-      var x = centerX + Math.cos(angle) * radius;
-      var y = centerY + Math.sin(angle) * radius;
-      g.drawString((i + 1).toString(), x, y);
-    }
-  }
-
   function getSteps() {
     var steps = Bangle.getHealthStatus("day").steps;
     steps = Math.round(steps/1000);
     return steps + "k";
   }
+
+  function drawDate() {
+    g.setFont(font, dateFontSize);
+
+    const date = new Date();
+    const dow = require("locale").dow(date, 2).toUpperCase(); //dj.
+    g.drawString(dow, g.getWidth() - 60, g.getHeight() - 60, true);
+
+    const mon = date.getDate() + " " + require("locale").month(date, 1);
+    g.setFont(font, "4x6");
+    g.drawString(mon, g.getWidth() - 70, g.getHeight() - 25, true);
+  }
+
 
   function drawSteps() {
   
@@ -180,10 +187,17 @@
     g.setFont(font, timeFontSize);
     g.drawString(t, xyCenter, yposTime, true);
 
-    drawSteps();
+    if (panel == Panel.STEPS) {
+       drawSteps();
+       //drawDate();
+       panel = Panel.DATE;
+    } else {
+       drawDate();
+       panel = Panel.STEPS;
+    }
+   
     drawWatchFace();
     updateWatch();
-    //drawNumbers();
   }
 
   // handle switch display on by pressing BTN1
