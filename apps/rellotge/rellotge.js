@@ -38,6 +38,57 @@
       return lines;
   }
 
+    // Define the center coordinates of the watch face
+  const margin = 10;
+  const centerX = 40 + margin;
+  const centerY = g.getHeight() - 40 - margin;
+  const diameter = 40;
+
+  // Function to draw the watch face
+  function drawWatchFace() {
+    // Clear the screen
+    //g.clear();
+
+    // Draw the outline of the watch face
+    g.setColor(0, 0, 0); // black color
+    g.drawCircle(centerX, centerY, diameter);
+
+    // Draw hour markers
+    for (let i = 0; i < 12; i++) {
+      const angle = (i / 12) * Math.PI * 2;
+      const x1 = centerX + Math.sin(angle) * 70 / 2;
+      const y1 = centerY - Math.cos(angle) * 70 / 2;
+      const x2 = centerX + Math.sin(angle) * 60 / 2;
+      const y2 = centerY - Math.cos(angle) * 60 / 2;
+      g.drawLine(x1, y1, x2, y2);
+    }
+  }
+
+  // Function to update the watch display
+  function updateWatch() {
+    const now = new Date();
+    const hours = now.getHours() % 12;
+    const minutes = now.getMinutes();
+
+    // Calculate angles for hour, minute, and second hands
+    const hourAngle = ((hours + minutes / 60) / 12) * Math.PI * 2;
+    const minuteAngle = (minutes / 60) * Math.PI * 2;
+    g.setColor(0, 0, 0); // black color
+
+    // Draw hour hand
+    const hourHandLength = 20;
+    const hourHandX = centerX + Math.sin(hourAngle) * hourHandLength;
+    const hourHandY = centerY - Math.cos(hourAngle) * hourHandLength;
+    g.drawLine(centerX, centerY, hourHandX, hourHandY);
+
+    // Draw minute hand
+    const minuteHandLength = 25;
+    const minuteHandX = centerX + Math.sin(minuteAngle) * minuteHandLength;
+    const minuteHandY = centerY - Math.cos(minuteAngle) * minuteHandLength;
+    g.drawLine(centerX, centerY, minuteHandX, minuteHandY);
+  }
+
+
   function drawSimpleClock() {
     g.clearRect(Bangle.appRect);
     // get date
@@ -107,7 +158,10 @@
     var mu = "";
     if (m < 10) {mu = "0"+m;} else {mu = m;}
 
-    g.drawString(d.getHours()+":"+mu, xyCenter, yposDate, true);
+    //g.drawString(d.getHours()+":"+mu, xyCenter, yposDate, true);
+
+    drawWatchFace();
+    updateWatch();
   }
 
   // handle switch display on by pressing BTN1
