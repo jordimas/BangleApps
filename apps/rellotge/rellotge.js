@@ -46,16 +46,15 @@
       return lines;
   }
 
-    // Define the center coordinates of the watch face
+  // Define the center coordinates of the watch face
   const margin = 10;
   const centerX = 40 + margin;
   const centerY = g.getHeight() - 40 - margin;
-  const diameter = 40;
 
   // Function to draw the watch face
   function drawWatchFace() {
 
-    // Draw the outline of the watch face
+    const diameter = 40;
     g.setColor(0, 0, 0); // black color
     g.drawCircle(centerX, centerY, diameter);
 
