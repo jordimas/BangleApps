@@ -19,6 +19,8 @@
   const yposDate = 130;
   const leshores = ["Les dotze","La una","Les dues","Les tres","Les quatre","Les cinc","Les sis","Les set","Les vuit","Les nou","Les deu","Les onze","Les dotze","La una","Les dues","Les tres","Les quatre","Les cinc","Les sis","Les set","Les vuit","Les nou","Les deu","Les onze","Les dotze"];
   const leshores2 = ["d'una","de dues","de tres","de quatre","de cinc","de sis","de set","de vuit","de nou","de deu","d'onze","de dotze"];
+  const RED = '#f00';
+  const BLACK = "#000"
 
   function getHora(hour) {
     if (hour >= 12) {
@@ -57,7 +59,7 @@
   function drawWatchFace() {
 
     const diameter = 40;
-    g.setColor(0, 0, 0); // black color
+    g.setColor(BLACK);
     g.drawCircle(centerX, centerY, diameter);
 
     // Draw hour markers
@@ -80,7 +82,7 @@
     // Calculate angles for hour, minute, and second hands
     const hourAngle = ((hours + minutes / 60) / 12) * Math.PI * 2;
     const minuteAngle = (minutes / 60) * Math.PI * 2;
-    g.setColor(0, 0, 0); // black color
+    g.setColor(BLACK);
 
     // Draw hour hand
     const hourHandLength = 10;
@@ -187,19 +189,17 @@
     g.setFont(font, timeFontSize);
     t = addLineFeeds(t, g, xyCenter);
 
-    const battery = E.getBattery();
- 
     let color;
-    if (battery > 10) {
-      color = '#f00';
+    if (E.getBattery() < 15) {
+      color = RED;
     }
     else {
-      color = '#000';
+      color = BLACK;
     }
 
     g.setColor(color);
     g.drawString(t, xyCenter, yposTime, true);
-    g.setColor(0, 0, 0);
+    g.setColor(BLACK);
     if (panel == Panel.STEPS) {
        drawSteps();
        panel = Panel.DATE;
