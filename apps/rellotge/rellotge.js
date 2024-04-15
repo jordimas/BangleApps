@@ -13,7 +13,8 @@
 
   let panel = Panel.STEPS;
 
-  const xyCenter = g.getWidth() /9;
+  const timeTextMagin = 15;
+  const xyCenter = timeTextMagin;
   const yposTime = 45;
   const yposDate = 130;
   const leshores = ["Les dotze","La una","Les dues","Les tres","Les quatre","Les cinc","Les sis","Les set","Les vuit","Les nou","Les deu","Les onze","Les dotze","La una","Les dues","Les tres","Les quatre","Les cinc","Les sis","Les set","Les vuit","Les nou","Les deu","Les onze","Les dotze"];
@@ -27,7 +28,7 @@
   }
 
   function addLineFeeds(inputString, g, posX) {
-      const margin = 2;
+      const margin = timeTextMagin;
       const words = inputString.split(' ');
       let lines = "";
       let line = "";
