@@ -186,8 +186,20 @@
 
     g.setFont(font, timeFontSize);
     t = addLineFeeds(t, g, xyCenter);
-    g.drawString(t, xyCenter, yposTime, true);
 
+    const battery = E.getBattery();
+ 
+    let color;
+    if (battery > 10) {
+      color = '#f00';
+    }
+    else {
+      color = '#000';
+    }
+
+    g.setColor(color);
+    g.drawString(t, xyCenter, yposTime, true);
+    g.setColor(0, 0, 0);
     if (panel == Panel.STEPS) {
        drawSteps();
        panel = Panel.DATE;
