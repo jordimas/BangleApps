@@ -73,6 +73,12 @@
     }
   }
 
+  function drawHand(centerX, centerY, hourAngle, handLength) {
+    const hourHandX = centerX + Math.sin(hourAngle) * handLength;
+    const hourHandY = centerY - Math.cos(hourAngle) * handLength;
+    g.drawLine(centerX, centerY, hourHandX, hourHandY);
+  }
+
   // Function to update the watch display
   function updateWatch() {
     const now = new Date();
@@ -84,17 +90,8 @@
     const minuteAngle = (minutes / 60) * Math.PI * 2;
     g.setColor(BLACK);
 
-    // Draw hour hand
-    const hourHandLength = 10;
-    const hourHandX = centerX + Math.sin(hourAngle) * hourHandLength;
-    const hourHandY = centerY - Math.cos(hourAngle) * hourHandLength;
-    g.drawLine(centerX, centerY, hourHandX, hourHandY);
-
-    // Draw minute hand
-    const minuteHandLength = 15;
-    const minuteHandX = centerX + Math.sin(minuteAngle) * minuteHandLength;
-    const minuteHandY = centerY - Math.cos(minuteAngle) * minuteHandLength;
-    g.drawLine(centerX, centerY, minuteHandX, minuteHandY);
+    drawHand(centerX, centerY, hourAngle, 10);
+    drawHand(centerX, centerY, minuteAngle, 15);
   }
 
   function getSteps() {
